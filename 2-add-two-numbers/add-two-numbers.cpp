@@ -10,55 +10,29 @@
  */
 class Solution {
 public:
-    void insertAtTail(ListNode* &l3,int data){
-        ListNode* nn=new ListNode(data);
-        if(l3==NULL){
-            l3=nn;
-            return;
-        }
-        ListNode* temp=l3;
-        while(temp->next!=NULL){
-            temp=temp->next;
-        }
-        temp->next=nn;
-    }
-
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        ListNode* temp1=l1;
-        ListNode* temp2=l2;
-        ListNode* list3 = NULL;
+        ListNode* dummyHead = new ListNode(0);
+        ListNode* tail = dummyHead;
+        int carry = 0;
 
-        int sum=0;
-        int carry=0;
-        while(temp1!=NULL && temp2!=NULL){
-            int total=temp1->val + temp2->val + carry;
-            int sum = total%10;
-            insertAtTail(list3,sum);
-            carry=total/10;
-            temp1=temp1->next;
-            temp2=temp2->next;
+        while (l1 != nullptr || l2 != nullptr || carry != 0) {
+            int digit1 = (l1 != nullptr) ? l1->val : 0;
+            int digit2 = (l2 != nullptr) ? l2->val : 0;
+
+            int sum = digit1 + digit2 + carry;
+            int digit = sum % 10;
+            carry = sum / 10;
+
+            ListNode* newNode = new ListNode(digit);
+            tail->next = newNode;
+            tail = tail->next;
+
+            l1 = (l1 != nullptr) ? l1->next : nullptr;
+            l2 = (l2 != nullptr) ? l2->next : nullptr;
         }
 
-        while(temp1!=NULL){
-            int total=temp1->val + carry;
-            int sum = total%10;
-            insertAtTail(list3,sum);
-            carry=total/10;
-            temp1=temp1->next;
-        }
-        while(temp2!=NULL){
-            int total=temp2->val + carry;
-            int sum = total%10;
-            insertAtTail(list3,sum);
-            carry=total/10;
-            temp2=temp2->next;
-        }
-        while(carry!=0){
-           int total= carry;
-            int sum = total%10;
-            insertAtTail(list3,sum);
-            carry=total/10; 
-        }
-        return list3;
+        ListNode* result = dummyHead->next;
+        delete dummyHead;
+        return result;
     }
 };
