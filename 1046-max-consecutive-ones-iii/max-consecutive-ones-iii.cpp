@@ -24,29 +24,19 @@ public:
     // }
 
     int longestOnes(vector<int>& nums, int k) {
-    int n = nums.size();
-    int left = 0, right = 0;
-    int maxOnes = 0;
-    int zeroCount = 0;
-
-    while (right < n) {
-        if (nums[right] == 0) {
-            zeroCount++;
-        }
-
-        while (zeroCount > k) {
-            if (nums[left] == 0) {
-                zeroCount--;
+        int i=0,j=0;
+        while(j<nums.size()){
+            if(nums[j]==0){
+                k--;
             }
-            left++;
+            if(k<0){
+                if(nums[i]==0){
+                    k++;
+                }
+                i++;
+            }
+            j++;
         }
-
-        maxOnes = max(maxOnes, right - left + 1);
-        right++;
-    }
-
-    return maxOnes;
-}
-
-    
+        return j-i;
+    }   
 };
