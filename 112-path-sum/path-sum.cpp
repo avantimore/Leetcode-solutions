@@ -11,24 +11,24 @@
  */
 class Solution {
 public:
-    void inorder(TreeNode* root, int k,int sum,bool &flag){
-        if(root==NULL){
-            return ;
-        }
-        if(!root->left && !root->right){
-            sum+=root->val;
-            if(sum==k){
-                flag =1;
-            }
-        }
-        sum += root->val;
-        inorder(root->left,k,sum,flag);
-        inorder(root->right,k,sum,flag);
+    bool inorder(TreeNode* root, int k, int sum) {
+    if (root == NULL) {
+        return false;
     }
-    bool hasPathSum(TreeNode* root, int targetSum) {
-        int sum = 0;
-        bool flag=0;
-        inorder(root,targetSum,sum,flag);
-        return flag;
+
+    // Check if the current node is a leaf node and if the sum matches the target
+    if (!root->left && !root->right && sum + root->val == k) {
+        return true;
     }
+
+    // Update the sum and continue searching in the left and right subtrees
+    sum += root->val;
+    return inorder(root->left, k, sum) || inorder(root->right, k, sum);
+}
+
+bool hasPathSum(TreeNode* root, int targetSum) {
+    int sum = 0;
+    return inorder(root, targetSum, sum);
+}
+
 };
