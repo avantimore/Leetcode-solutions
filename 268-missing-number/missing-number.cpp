@@ -1,22 +1,12 @@
 class Solution {
 public:
     int missingNumber(vector<int>& nums) {
-        int n=nums.size();
-        int ans=-1;
-        vector<int> mark(n+1);
-
+        int n = nums.size();
+        int actual = n*(n+1)/2;
+        int currSum =0;
         for(int i=0;i<n;i++){
-            int ind = nums[i];
-            mark[ind]=INT_MIN;
+            currSum += nums[i];
         }
-        for(int i=0;i<n;i++){
-            if(mark[i]!=INT_MIN){
-                ans = i;
-            }
-        }
-        if(ans == -1){
-            return n;
-        }
-        return ans;
+        return (actual-currSum);
     }
 };
