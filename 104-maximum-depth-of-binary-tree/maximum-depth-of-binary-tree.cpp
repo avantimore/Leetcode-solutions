@@ -12,12 +12,34 @@
 class Solution {
 public:
     int maxDepth(TreeNode* root) {
-        if(root==NULL){
-            return 0;
-        }
-        int left = maxDepth(root->left);
-        int right = maxDepth(root->right);
+        if (root == nullptr) {
+        return 0;
+    }
 
-        return max(left,right)+1;
+        int depth = 0;
+        std::queue<TreeNode*> q;
+        q.push(root);
+
+        while (!q.empty()) {
+            int levelSize = q.size();  // Number of nodes at the current level
+
+            for (int i = 0; i < levelSize; ++i) {
+                TreeNode* current = q.front();
+                q.pop();
+
+                // Process the current node
+
+                if (current->left) {
+                    q.push(current->left);  // Enqueue left child
+                }
+
+                if (current->right) {
+                    q.push(current->right);  // Enqueue right child
+                }
+            }
+
+            ++depth;  // Completed processing nodes at the current level
+        }
+        return depth;
     }
 };
