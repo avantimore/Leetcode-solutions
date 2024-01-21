@@ -14,19 +14,8 @@ public:
         if(!root){
             return ;
         }
-        if(root->val==p->val){
-            ans=p;
-            return ;
-        }
-        if(root->val==q->val){
-            ans=q;
-            return ;
-        }
-        if((root->val>q->val && root->val<p->val)){
-            ans=root;
-            return;
-        }
-        if((root->val<q->val && root->val>p->val)){
+
+        if((root->val>q->val && root->val<p->val) || (root->val<q->val && root->val>p->val) || (root->val==q->val) || (root->val==p->val)){
             ans=root;
             return;
         }
