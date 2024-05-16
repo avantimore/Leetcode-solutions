@@ -11,8 +11,7 @@ public:
         }
 
         int n = adjlist.size();
-        // cout<<n;
-        for(int i=0;i<=n;i++){
+        for(int i=1;i<=n;i++){
             int sz = adjlist[i].size();
             if(sz==n-1)return i;
         }
