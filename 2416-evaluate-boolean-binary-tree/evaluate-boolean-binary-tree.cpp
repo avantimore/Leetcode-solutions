@@ -11,20 +11,16 @@
  */
 class Solution {
 public:
-    int postorder(TreeNode* root){
-        if(root->right==NULL && root->left==NULL){
-            return root->val;
-        }
-        int left = postorder(root->left);
-        int right = postorder(root->right);
-        int ans = 1;
-        if(root->val==2){
-            ans = left || right;
-        }
-        else{
-            ans = left && right;
-        }
-        return ans;
+    bool postorder(TreeNode* root){
+        if(root->val == 0 || root->val == 1) {
+            return root->val == 1;
+        } else if(root->val == 2) {
+            return postorder(root->left) || postorder(root->right);
+        } else if(root->val == 3) {
+            return postorder(root->left) && postorder(root->right);
+        } 
+
+        return false;
     }
     bool evaluateTree(TreeNode* root) {
         int ans = postorder(root);
