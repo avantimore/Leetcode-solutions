@@ -11,18 +11,27 @@
  */
 class Solution {
 public:
-    void inorder(TreeNode* root, int level,int &maxHt){
-        if(root==NULL)return ;
-        maxHt = max(maxHt,level);
-        inorder(root->left,level+1,maxHt);
-        inorder(root->right,level+1,maxHt);
-    }
-    int maxDepth(TreeNode* root) {
-        int maxHt = INT_MIN;
-        if(root==NULL)return 0;
-        int level = 1;
-        inorder(root,level,maxHt);
+    // void inorder(TreeNode* root, int level,int &maxHt){
+    //     if(root==NULL)return ;
+    //     maxHt = max(maxHt,level);
+    //     inorder(root->left,level+1,maxHt);
+    //     inorder(root->right,level+1,maxHt);
+    // }
+    // int maxDepth(TreeNode* root) {
+    //     int maxHt = INT_MIN;
+    //     if(root==NULL)return 0;
+    //     int level = 1;
+    //     inorder(root,level,maxHt);
 
-        return maxHt;
+    //     return maxHt;
+    // }
+    int maxDepth(TreeNode* root) {
+        if(root == NULL)
+            return 0;
+
+        int maxLeft = maxDepth(root->left);
+        int maxRight = maxDepth(root->right);
+
+        return maxLeft > maxRight ? maxLeft+1:maxRight+1 ;
     }
 };
