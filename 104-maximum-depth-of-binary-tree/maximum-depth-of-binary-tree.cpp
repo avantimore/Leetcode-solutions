@@ -11,35 +11,18 @@
  */
 class Solution {
 public:
-    int maxDepth(TreeNode* root) {
-        if (root == nullptr) {
-        return 0;
+    void inorder(TreeNode* root, int level,int &maxHt){
+        if(root==NULL)return ;
+        maxHt = max(maxHt,level);
+        inorder(root->left,level+1,maxHt);
+        inorder(root->right,level+1,maxHt);
     }
+    int maxDepth(TreeNode* root) {
+        int maxHt = INT_MIN;
+        if(root==NULL)return 0;
+        int level = 1;
+        inorder(root,level,maxHt);
 
-        int depth = 0;
-        std::queue<TreeNode*> q;
-        q.push(root);
-
-        while (!q.empty()) {
-            int levelSize = q.size();  // Number of nodes at the current level
-
-            for (int i = 0; i < levelSize; ++i) {
-                TreeNode* current = q.front();
-                q.pop();
-
-                // Process the current node
-
-                if (current->left) {
-                    q.push(current->left);  // Enqueue left child
-                }
-
-                if (current->right) {
-                    q.push(current->right);  // Enqueue right child
-                }
-            }
-
-            ++depth;  // Completed processing nodes at the current level
-        }
-        return depth;
+        return maxHt;
     }
 };
