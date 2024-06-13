@@ -13,7 +13,7 @@ class Solution {
 public:
     TreeNode* solveArrBst(vector<int> nums,int s,int e){
         if(s>e)return NULL;
-        int mid = (s+e)/2;
+        int mid = s+(e-s)/2;
         TreeNode* newNode = new TreeNode(nums[mid]);
         newNode->left = solveArrBst(nums,s,mid-1);
         newNode->right = solveArrBst(nums,mid+1,e);
