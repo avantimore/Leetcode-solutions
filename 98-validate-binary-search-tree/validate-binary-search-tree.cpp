@@ -11,22 +11,21 @@
  */
 class Solution {
 public:
-    bool isBST(TreeNode* root,long long mini,long long maxi){
-        if(!root)return 1;
-        if(root->val>=maxi || root->val<=mini ){
-            return 0;
+    bool validBstHelp(TreeNode* root, long long maxi, long long mini){
+        if(root==NULL)return true;
+        if(root->val>=maxi || root->val<=mini){
+            return false;
         }
-        return isBST(root->left,mini,root->val) && isBST(root->right,root->val,maxi);
+        bool left = validBstHelp(root->left,root->val, mini);
+        bool right = validBstHelp(root->right,maxi,root->val);
 
+        return (left && right);
     }
     bool isValidBST(TreeNode* root) {
-        if(!root){
-            return 1;
-        }
-        
-        bool lt = isBST(root->left,-9223372036854775808,root->val);
-        bool rt = isBST(root->right,root->val,9223372036854775807);
+        long long maxi = 2147483649;
+        long long mini = -2147483649;
 
-        return (lt && rt);
+        return validBstHelp(root,maxi,mini);
+
     }
 };
