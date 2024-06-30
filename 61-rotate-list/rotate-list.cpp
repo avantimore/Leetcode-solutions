@@ -10,7 +10,7 @@
  */
 class Solution {
 public:
-    int length(ListNode* head){
+    int findLength(ListNode* head){
         ListNode* temp=head;
         int len=1;
         while(temp->next!=NULL){
@@ -20,25 +20,37 @@ public:
         return len;
     }
     ListNode* rotateRight(ListNode* head, int k) {
-        if(head==NULL || head->next==NULL){
+        if (!head || !head->next || k == 0) {
             return head;
         }
-        int len=length(head);
-        if(k>=len){
-            k = k % len;
-        }
-        while(k){
-            ListNode* temp=head;
-            while(temp->next->next!=NULL){
-                temp=temp->next;
-            }
 
-            ListNode* tail=temp->next;
-            temp->next=NULL;
-            tail->next=head;
-            head=tail;
-            k--;
+        int len = findLength(head);
+        k = k % len; // Normalize k
+        if (k == 0) {
+            return head;
         }
-        return head;
+
+        int toGo = len - k;
+        ListNode* temp = head;
+        
+        // Move toGo nodes ahead
+        while (--toGo) {
+            temp = temp->next;
+        }
+        
+        // Store the new head and break the list
+        ListNode* newHead = temp->next;
+        temp->next = nullptr;
+
+        // Traverse to the end of the new list
+        temp = newHead;
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+        
+        // Attach the old head to the end of the list
+        temp->next = head;
+
+        return newHead;
     }
 };
