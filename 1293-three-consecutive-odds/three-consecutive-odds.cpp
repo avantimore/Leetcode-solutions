@@ -1,14 +1,19 @@
 class Solution {
 public:
     bool threeConsecutiveOdds(vector<int>& arr) {
-        int n = arr.size();
-        if(n<3)return 0;
+        int count = 0;  // Initialize count to keep track of consecutive odd numbers
 
-        for(int i=1;i<n-1;i++){
-            if((arr[i]%2!=0) && (arr[i-1]%2!=0) && (arr[i+1]%2!=0)){
-                return 1;
+        for (int i = 0; i < arr.size(); i++) {  // Iterate through each element in the array
+            if (arr[i] % 2 != 0) {  // Check if the current element is odd
+                count++;  // Increment the count if it's odd
+                if (count == 3) {  // If we have found three consecutive odds, return true
+                    return true;
+                }
+            } else {  // If the element is even, reset the count to 0
+                count = 0;
             }
         }
-        return 0;
+
+        return false; 
     }
 };
