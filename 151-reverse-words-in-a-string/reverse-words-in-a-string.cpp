@@ -1,21 +1,36 @@
 class Solution {
 public:
     string reverseWords(string s) {
-        if (s.size() == 0) return s;
-        stack<string> stack;
-        string result;
-        for (int i = 0; i < s.size(); i++) {
-            string word;
-            if (s[i] == ' ') continue; //skip spaces
-            while (i < s.size() && s[i] != ' ') { //store continuous letters into word
-                word += s[i]; i++;
+        string ans="";
+        int n = s.length();
+
+        string temp = "";
+        int i = 0;
+
+        while(i<n){
+            if(s[i]==' '){
+                i++;
             }
-            stack.push(word); //push word to the stack
+            else{
+                if(i<n-1 && s[i+1]==' '){
+                    temp.push_back(s[i]);
+                    if(ans.length()!=0)temp.push_back(' ');
+                    ans = temp + ans;
+                    temp.erase();
+                    i++;
+                }
+                else if(i==n-1){
+                    temp.push_back(s[i]);
+                    if(ans.length()!=0) temp.push_back(' ');
+                    ans = temp + ans;
+                    i++;
+                }
+                else{
+                    temp.push_back(s[i]);
+                    i++;
+                }
+            }
         }
-        while (!stack.empty()) {
-            result += stack.top(); stack.pop();
-            if (!stack.empty()) result += " ";
-        }
-        return result;
+        return ans;
     }
 };
