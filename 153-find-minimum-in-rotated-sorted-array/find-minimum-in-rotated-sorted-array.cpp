@@ -1,14 +1,23 @@
 class Solution {
 public:
-    int findMin(vector<int>& n) {
-         int s=0,l=n.size();
-        int e =l-1;
-        while(s<e){
-            int m = s+(e-s)/2;
-            if(n[m] > n[e]) s=m+1;          // left side has small values (rotated array)
-            else if(n[m] < n[e]) e=m;       // right side has small value (not rotated)
-            else e--;                       // mid value equal to end move towards small
+    int findMin(vector<int>& nums) {
+        int start = 0, end = nums.size()-1, ans = nums[0];
+
+        while(start<=end)
+        {
+            int mid = start+(end-start)/2;
+
+            //Left side sorted array
+            if(nums[mid]>=nums[0]) 
+            start = mid + 1;
+
+            //Right side sorted array
+            else {
+                ans = nums[mid];
+                end = mid - 1;
+            }
         }
-        return n[s];
+
+        return ans;
     }
 };
