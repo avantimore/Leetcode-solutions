@@ -15,15 +15,18 @@ public:
     int rob(vector<int>& nums) {
         int n = nums.size();
 
-        // if(n==1)return nums[0];
-        // if(n==2) return max(nums[0],nums[1]);
+        int prev1 = nums[0];
+        int prev2 = 0;
         
-        // for(int i=2;i<n;i++){
+        for(int i=1;i<n;i++){
+            int take = nums[i] + prev2;
+            int notTake = prev1;
+            int maxi = max(take,notTake);
 
-        // }
+            prev2 = prev1;
+            prev1 = maxi;
+        }
 
-
-        vector<int> dp(n,-1);
-        return solve(n-1,nums,dp);
+        return prev1;
     }
 };
