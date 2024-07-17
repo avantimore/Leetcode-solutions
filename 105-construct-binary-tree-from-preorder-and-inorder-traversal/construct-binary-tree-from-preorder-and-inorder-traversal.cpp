@@ -34,12 +34,13 @@ public:
         int i=0;
         int e = inorder.size()-1;
         int s = 0;
-        int num = preorder[i++];
-        TreeNode* root = new TreeNode(num);
-        int ind = find(inorder,num,e+1);
+        // int num = preorder[i++];
+        // TreeNode* root = new TreeNode(num);
+        // int ind = find(inorder,num,e+1);
 
-        root->left = build(i,s,ind-1,preorder,inorder,e+1);
-        root->right = build(i,ind+1,e,preorder,inorder,e+1);
+        // root->left = 
+        TreeNode* root = build(i,s,e,preorder,inorder,e+1);
+        // root->right = build(i,ind+1,e,preorder,inorder,e+1);
 
         return root;
     }
