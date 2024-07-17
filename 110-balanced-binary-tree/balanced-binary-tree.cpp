@@ -11,15 +11,18 @@
  */
 class Solution {
 public:
-    pair<int,bool> solve(TreeNode* root){
-        if(!root) return {0,1};
-        pair<int,bool> left = solve(root->left);
-        pair<int,bool> right =  solve(root->right);
-        bool ans = (abs(left.first-right.first)<=1)?1:0; 
-        if(ans) ans = right.second && left.second;
-        return {max(right.first,left.first)+1,ans};
+    int dfsHeight (TreeNode *root) {
+        if (root == NULL) return 0;
+        
+        int leftHeight = dfsHeight (root -> left);
+        if (leftHeight == -1) return -1;
+        int rightHeight = dfsHeight (root -> right);
+        if (rightHeight == -1) return -1;
+        
+        if (abs(leftHeight - rightHeight) > 1)  return -1;
+        return max (leftHeight, rightHeight) + 1;
     }
-    bool isBalanced(TreeNode* root) {
-        return solve(root).second;
+    bool isBalanced(TreeNode *root) {
+        return dfsHeight (root) != -1;
     }
 };
