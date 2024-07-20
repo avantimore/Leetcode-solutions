@@ -1,51 +1,37 @@
 class Solution {
 public:
-    void dfs(int start, int n, const std::vector<std::vector<int>>& roads,
-             std::vector<int>& visited) {
-        std::stack<int> s;
-        s.push(start);
-
-        while (!s.empty()) {
-            int current = s.top();
-            s.pop();
-
-            if (!visited[current]) {
-                visited[current] = 1; // Mark the current city as visited.
-
-                // Iterate over all cities to find the ones connected to the
-                // current city.
-                for (int i = 0; i < n; i++) {
-                    if (roads[current][i] && !visited[i]) {
-                        // If city 'i' is connected to the current city and not
-                        // visited, push it onto the stack.
-                        s.push(i);
-                    }
+    void dfs(vector<vector<int>>& adj,vector<int> &visited,int N,int src){
+            visited[src] = 1;
+            
+            for(int &i:adj[src]){
+                if(!visited[i]){
+                    dfs(adj,visited,N,i);
+                }
+            }
+    }
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int V = isConnected.size();
+        int ans = 0;
+        vector<int> visited(V,0);
+        
+        vector<vector<int>> adj(V);
+        for(int i=0;i<V;i++){
+            for(int j=0;j<V;j++){
+                if(isConnected[i][j]){
+                    adj[i].push_back(j);
+                    adj[j].push_back(i);
                 }
             }
         }
-    }
 
-    int findCircleNum(vector<vector<int>>& roads) {
-        int n = roads[0].size();
-        std::vector<int> visited(
-            n, 0); // Create an array to track visited cities, initialized to 0.
-        int count = 0; // Initialize the province count.
-        // Iterate over all cities to find unvisited cities and perform DFS on
-        // them.
-        for (int i = 0; i < n; i++) {
-            if (!visited[i]) {
-
-                // If city 'i' is unvisited, then it's part of a new province.
-                // Perform iterative DFS to mark all connected cities in this
-                // province as visited.
-                dfs(i, n, roads, visited);
-
-                // Increment the province count after DFS traversal.
-                count++;
+        for(int i=0;i<V;i++){
+            
+            if(!visited[i]){
+                dfs(adj,visited,V,i);
+                ans++;
             }
-        }
 
-        // Return the total number of provinces.
-        return count;
+        }
+        return ans;
     }
 };
