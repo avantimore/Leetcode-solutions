@@ -1,32 +1,24 @@
 class Solution {
 public:
-    
-    int coinChangeHelper(vector<int> &dp,int n,vector<int> coins){
-        if(n==0)return 0;
+    int solve(int i,vector<int>& coins, int amt,vector<vector<int>> &dp){
 
-        int ans=INT_MAX;
-
-        for(int i=0;i<coins.size();i++){
-            if(n-coins[i]>=0){
-                int subAns=0;
-                if(dp[n-coins[i]]!=-1){
-                    subAns = dp[n-coins[i]];
-                }
-                else{
-                    subAns = coinChangeHelper(dp,n-coins[i],coins);
-                }
-                if(subAns!=INT_MAX && subAns+1<ans){
-                    ans = subAns+1;
-                }
-            }   
+        if(i<=0){
+            if(amt%coins[0]==0)return (amt/coins[0]);
+            else return 1e9;
         }
-        return dp[n] = ans;
-    } 
+        if(dp[i][amt]!=-1)return dp[i][amt];
+        int nottake = solve(i-1,coins,amt,dp);
+        int take = 1e9;
+        if(amt>=coins[i]) take = 1+solve(i,coins,amt-coins[i],dp);
+
+        return dp[i][amt] = min(take,nottake);
+    }
     int coinChange(vector<int>& coins, int amount) {
-        vector<int> dp(amount+1, -1);
-        dp[0] = 0;
-        int ans = coinChangeHelper(dp, amount, coins);
-        if(ans==INT_MAX)return -1; 
-        return ans;
+        int n = coins.size();
+        if(amount==0)return 0;
+
+        vector<vector<int>> dp(n, vector<int>(amount + 1, -1));
+        int ans = solve(n-1,coins,amount,dp);
+        return (ans==1e9)? -1:ans;
     }
 };
