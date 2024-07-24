@@ -2,15 +2,16 @@ class Solution {
 public:
     int maxProfit(vector<int>& prices) {
         int n = prices.size();
-        int profit = 0;
-        int maxi = prices[n-1];
-
-        for(int i=n-2;i>=0;i--){
-            int diff = maxi - prices[i];
-            profit = max(profit,diff);
-            maxi = max(maxi,prices[i]);
+        int maxi = INT_MIN;
+        int mini = prices[0];
+        for(int i=1;i<n;i++){
+            if(prices[i]-mini>0){
+                maxi = max(maxi,prices[i]-mini);
+            }
+            else{
+                mini = prices[i];
+            }
         }
-
-        return profit;
+        return (maxi!=INT_MIN)?maxi:0;
     }
 };
