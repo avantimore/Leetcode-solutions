@@ -3,14 +3,13 @@ public:
 
     void solve(vector<int>& nums,vector<int> temp,vector<vector<int>> &ans,int i,int sum,int target){
         
-        if(i>=nums.size()){
-            if(sum==target){
-                ans.push_back(temp);
-            }
+        if(i>=nums.size() || sum>target)return;
+        if(sum==target){
+            ans.push_back(temp);
             return;
         }
         temp.push_back(nums[i]);
-        if(sum<=target)solve(nums,temp,ans,i,sum+nums[i],target);
+        solve(nums,temp,ans,i,sum+nums[i],target);
         temp.pop_back();
         solve(nums,temp,ans,i+1,sum,target);
     }
